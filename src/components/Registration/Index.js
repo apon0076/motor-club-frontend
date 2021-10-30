@@ -84,7 +84,7 @@ export default function Index() {
           old_car: "none",
           complain,
           work_to_do: work,
-          vehicle_option: selectedVehicle.brand,
+          vehicle_option: formData.brand,
         })
       );
     }
