@@ -19,7 +19,7 @@ import CustomerProfile from "./components/SearchByCustomer/CustomerProfile";
 import SearchByVehicleModelIndex from './components/SearchByVehicleModel/Index'
 import VehicleProfile from "./components/SearchByVehicleModel/VehicleProfile";
 import SearchByRegIndex from './components/SearchByReg/Index';
-import SalesIndex from './components/Sales/Index'
+import SalesIndex from './components/Sales/Index';
 
 
 function App({ user }) {
