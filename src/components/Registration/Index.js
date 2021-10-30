@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { fetchAddNewBrand } from "../../store/Customer/customerAction";
 import {
@@ -29,7 +29,7 @@ export default function Index() {
   });
 
   const data = useSelector((state) => state.registration.oldReg);
-  console.log(data);
+  console.log("data", data);
   const [addAnother, setAddAnother] = useState(false);
   const dispatch = useDispatch();
   const [work, setWork] = useState("");
@@ -37,38 +37,56 @@ export default function Index() {
   const [vehicle_option, setvehicle_option] = useState("");
 
   console.log("vehicle_option", vehicle_option);
+  const vehicelId = data?.vachele?.find((data) => data.id === vehicle_option);
   // const editorRef = useRef(null);
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
-    console.log(data);
-    if (
-      !data?.customer?.name &&
-      !address.name &&
-      !data?.customer?.address &&
-      !data?.customer?.email &&
-      !address.email &&
-      !address.address
-    ) {
-      toast.error("Please fill all the required fields");
+
+  useEffect(() => {
+    if (data?.customer) {
+      // setValue([
+      //   { name: data?.customer?.name },
+      //   { address: data?.customer?.phone },
+      // ]);
+      setValue("name", data?.customer?.name);
+      setValue("address", data?.customer?.address);
+      setValue("vehicle_option", data?.vachele[0]?.registration_no);
+    }
+  }, [data?.customer]);
+  const onSubmit = (formData) => {
+    console.log(formData);
+    let selectedVehicle = data?.vachele?.find(
+      (data) => data.registration_no === formData.vehicle_option
+    );
+    console.log(selectedVehicle);
+    if (data?.customer?.address || data?.customer?.name) {
+      dispatch(
+        fetchRegistration({
+          ...formData,
+          ...otherData,
+          complain,
+          work_to_do: work,
+          vehicle_option: selectedVehicle.brand,
+          customer_id: selectedVehicle.customer_id,
+          vehicle_id: selectedVehicle.id,
+        })
+      );
     } else {
       dispatch(
         fetchRegistration({
-          ...data,
+          ...formData,
           ...otherData,
           old_customer: "none",
           old_car: "none",
           complain,
           work_to_do: work,
-          vehicle_option,
+          vehicle_option: selectedVehicle.brand,
         })
       );
-      setTimeout(() => {
-        history.push("/");
-      }, 1500);
     }
   };
 
@@ -124,12 +142,9 @@ export default function Index() {
                   defaultValue={
                     data?.customer?.name ? data?.customer?.name : ""
                   }
-                  {...register("name")}
-                  onChange={(e) =>
-                    setAddress({ ...address, name: e.target.value })
-                  }
+                  {...register("name", { required: true })}
                 />
-                {!data?.customer?.name && !address.name && (
+                {errors.name && (
                   <p className="text-xs text-red-500 ">
                     Customer Name is required
                   </p>
@@ -144,12 +159,9 @@ export default function Index() {
                   defaultValue={
                     data?.customer?.address ? data?.customer?.address : ""
                   }
-                  {...register("address")}
-                  onChange={(e) =>
-                    setAddress({ ...address, address: e.target.value })
-                  }
+                  {...register("address", { required: true })}
                 />
-                {!data?.customer?.address && !address.address && (
+                {errors.address && (
                   <p className="text-xs text-red-500">Address is required</p>
                 )}
               </div>
@@ -168,9 +180,9 @@ export default function Index() {
                     setAddress({ ...address, email: e.target.value })
                   }
                 />
-                {!data?.customer?.email && !address.email && (
+                {/* {!data?.customer?.email && !address.email && (
                   <p className="text-xs text-red-500">Address is required</p>
-                )}
+                )} */}
               </div>
             </div>
           </div>
@@ -185,7 +197,7 @@ export default function Index() {
                 {...register("vehicle_option")}
               >
                 {data?.vachele?.map((data) => (
-                  <option value={data.brand}>
+                  <option value={data.registration_no}>
                     {data.brand} {data.model} {data.registration_no}{" "}
                   </option>
                 ))}
