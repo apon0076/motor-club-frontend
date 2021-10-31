@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaMinusSquare, FaPlusSquare } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
@@ -64,6 +64,7 @@ export default function CreateInvoice() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -71,13 +72,22 @@ export default function CreateInvoice() {
   console.log("====================================");
   console.log(oldReg);
   console.log("====================================");
+  const [reg_no, setReg_no] = useState();
+  useEffect(() => {
+    if(oldReg?.customer){
+      setValue("vehicle_model",oldReg?.vachele[0]?.registration_no);
+      setValue("customer_name",oldReg?.customer?.name);
+      setReg_no(oldReg?.vachele[0]?.registration_no);
+      // setValue("vehicle_reg_no",oldReg?.vachele[0]?.registration_no);
+    }
+  }, [oldReg?.customer])
   const onSubmit = (data) => {
     console.log("customer_id", inputList);
-    const id = oldReg?.vachele?.find(
-      (Oldata) => Oldata.brand == data?.vehicle_model
+    const vechicle_details = oldReg?.vachele?.find(
+      (Oldata) => Oldata.registration_no == data?.vehicle_model
     );
     console.log("====================================");
-    console.log(id);
+    console.log(vechicle_details);
     console.log("====================================");
 
     axios.post(
@@ -85,12 +95,13 @@ export default function CreateInvoice() {
       {
         ...data,
         inputList,
-        customer_id: oldReg?.vachele[0].customer_id,
-        vehicle_id: id?.id,
+        customer_id: vechicle_details?.customer_id,
+        vehicle_id: vechicle_details?.id,
         sub_total: sum,
         discount,
         final_price: discount_amount,
         payment_method,
+        vehicle_reg_no:reg_no,
       },
       {
         headers: {
@@ -102,9 +113,6 @@ export default function CreateInvoice() {
       history.push("/invoice");
     }, 2000);
   };
-  console.log(inputList);
-
-  console.log("vehicleId", vehicleId);
   const history = useHistory();
 
   const handleRoute = () => {};
@@ -151,9 +159,10 @@ export default function CreateInvoice() {
               <select
                 className="border border-black outline-none px-2 py-2 w-8/12 mr-5"
                 {...register("vehicle_model", { required: true })}
+                onClick={(e)=>setReg_no(e.target.value)}
               >
                 {oldReg?.vachele?.map((data) => (
-                  <option value={data?.brand}>{data?.brand}</option>
+                  <option value={data?.registration_no}>{data?.brand} {data.model} {data.registration_no}</option>
                 ))}
               </select>
               {errors.vehicle_model && (
@@ -193,13 +202,9 @@ export default function CreateInvoice() {
               <input
                 className="border border-black outline-none px-2 py-1 w-8/12"
                 type="text"
-                {...register("vehicle_reg_no", { required: true })}
+                {...register("vehicle_reg_no")}
+                defaultValue={reg_no}
               />
-              {errors.vehicle_reg_no && (
-                <p className="text-xs text-red-500">
-                  Vehicle Registration is required
-                </p>
-              )}
             </div>
 
             <div>

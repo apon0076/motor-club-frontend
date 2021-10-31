@@ -75,6 +75,9 @@ export default function Index() {
           vehicle_id: selectedVehicle.id,
         })
       );
+      setTimeout(function () {
+        history.push("/");
+      }, 1500);
     } else {
       dispatch(
         fetchRegistration({
@@ -86,7 +89,10 @@ export default function Index() {
           work_to_do: work,
           vehicle_option: formData.brand,
         })
-      );
+        );
+        setTimeout(function () {
+          history.push("/");
+        }, 1500);
     }
   };
 

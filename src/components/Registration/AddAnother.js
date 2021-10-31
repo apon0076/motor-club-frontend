@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function AddAnother({ setOtherData, otherData, addNewBrand }) {
   const [errors, setErrors] = useState({});
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit,reset } = useForm();
   const onSubmit = (data) => {
     console.log(data);
+    reset();
   };
   const onSave = () => {
     if (
@@ -14,7 +16,7 @@ export default function AddAnother({ setOtherData, otherData, addNewBrand }) {
       otherData.model &&
       otherData.model_year &&
       otherData.reg_no
-    ) {
+    ) {      
     } else {
       setErrors({ ...otherData });
     }
@@ -114,11 +116,13 @@ export default function AddAnother({ setOtherData, otherData, addNewBrand }) {
               console.log("yes");
               onSave();
               addNewBrand(otherData);
+              toast.success("New Vehicle Added")
             }}
             className="bg-red-800 text-white py-2 px-10 transition-all ease-in-out hover:bg-red-900 mt-10"
           >
-            Save
+            Add New Vehicle
           </button>
+          <ToastContainer/>
         </div>
       </form>
     </div>

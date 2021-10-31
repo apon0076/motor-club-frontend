@@ -10,7 +10,6 @@ export default function Invoice() {
   const carId = useSelector((state) => state.invoice.carId);
   const invoiceId = useSelector((state) => state.invoice.invoiceId);
   const invoice = useSelector((state) => state.invoice.invoice);
-  console.log("sdfjsdis", invoice);
 
   useEffect(() => {
     dispatch(fetchInvoices(userID, carId, invoiceId));
