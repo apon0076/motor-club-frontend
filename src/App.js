@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import {
   Redirect,
@@ -20,17 +20,26 @@ import SearchByVehicleModelIndex from './components/SearchByVehicleModel/Index'
 import VehicleProfile from "./components/SearchByVehicleModel/VehicleProfile";
 import SearchByRegIndex from './components/SearchByReg/Index';
 import SalesIndex from './components/Sales/Index';
+import SidebarToggle from "./components/Layouts/SidebarToggle";
 
 
 function App({ user }) {
   const location = useLocation();
+  const [sidebarToggle, setSidebarToggle] = useState(false)
   return (
     <>
      <div className="">
         {location.pathname === "/user-login" ? null : (
-          <Navbar />
+          <Navbar setSidebarToggle={setSidebarToggle} sidebarToggle={sidebarToggle}/>
         )}
+        
       </div>
+      {location.pathname === "/user-login" ? null : (
+         sidebarToggle?
+          <SidebarToggle setSidebarToggle={setSidebarToggle} sidebarToggle={sidebarToggle}/>
+          :null
+        )}
+      
     <Switch>
       <Route path="/user-login" component={LoginIndex} />
         <Route

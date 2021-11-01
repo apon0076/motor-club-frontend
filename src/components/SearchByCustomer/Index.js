@@ -24,10 +24,10 @@ export default function Index() {
       };
     return (
         <div className="flex">
-            <div className="w-2/12">
+            <div className="w-2/12 sidebarSection">
                 <Sidebar/>
             </div>
-            <div className="w-10/12 px-6 py-20 mt-8">
+            <div className="w-10/12 px-6 py-20 mt-10 bodySection">
                 <div className="flex items-center justify-end">
                     <div className="relative">
                         <input className="border border-black px-8 py-1 outline-none" type="text"

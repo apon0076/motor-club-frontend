@@ -26,10 +26,6 @@ export default function SalesSummary() {
   return (
     <div>
       <p className="mt-10 text-2xl font-semibold">Sales</p>
-      {/* <div className="flex items-center mt-3 text-sm">
-        <FaCalendarAlt />
-        <p className="ml-2">10/12/2021</p>
-      </div> */}
 
       <div className="mt-5 border border-gray-400 rounded-md p-5">
         <table className="common__table">

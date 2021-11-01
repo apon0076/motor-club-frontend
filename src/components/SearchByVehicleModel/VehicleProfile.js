@@ -17,10 +17,10 @@ export default function VehicleProfile() {
   }, []);
   return (
     <div className="flex">
-      <div className="w-2/12">
-        <Sidebar />
-      </div>
-      <div className="w-10/12 px-6 py-20 mt-10">
+      <div className="w-2/12 sidebarSection">
+                <Sidebar/>
+            </div>
+            <div className="w-10/12 px-6 py-20 mt-10 bodySection">
         <p>Reg Number: {details?.carlist?.registration_no}</p>
         <p>Vehicle Brand: {details?.carlist?.brand}</p>
         <p>Vehicle Series: {details?.carlist?.series}</p>

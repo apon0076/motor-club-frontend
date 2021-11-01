@@ -175,6 +175,9 @@
 .common__table tbody tr td {
   padding: 10px;
 }
+.sidebarToggleSection{
+  z-index: 1000;
+}
 @media print {
   header,
   footer,
@@ -196,7 +199,7 @@
   }
 }
 .invoice__summary__table{
-  width: 32%;
+  width: 31%;
 }
 .invoice__summary__table tr td {
   /* padding: 10px !important; */
@@ -231,6 +234,17 @@
 .invoice__section{
   width: 83.333333%;
 }
+.invoice__table tr th {
+  white-space: nowrap;
+}
+.invoice__table tr td {
+  white-space: nowrap;
+}
+
+.menuToggle__icon{
+  display: none;
+  margin-right: 1.5rem;
+}
 @media print {
   *{
     font-size: 12px !important;
@@ -243,5 +257,29 @@
   }
   .invoice__table--td{
     width: 150% !important;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  * {
+    font-size: 98%;
+  }
+  /* .navLogo{
+    height: 10px;
+    width: auto;
+  } */
+  .navbar__section{
+    height: 5vh;
+  }
+  .sidebar__section{
+    display: none;
+  }
+  .bodySection{
+    width: 100%;
+  }
+  .sidebarSection{
+    width: 0%;
+  }
+  .menuToggle__icon{
+    display: block;
   }
 }

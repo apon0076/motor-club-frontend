@@ -20,10 +20,10 @@ export default function Invoice() {
   console.log("invoice", invoice);
   return (
     <div className="flex">
-      <div className="w-2/12 sidebar">
-        <Sidebar />
-      </div>
-      <div className="invoice__section px-6 py-5 mt-28">
+      <div className="w-2/12 sidebarSection">
+                <Sidebar/>
+            </div>
+            <div className="w-10/12 px-6 py-20 mt-10 bodySection">
         <div className="invoicePrint">
           <div className="flex  justify-between mt-5">
             <div className="w-4/12 ml-2">
@@ -113,9 +113,9 @@ export default function Invoice() {
                 <th>Sl</th>
                 <th>Description of Spare parts and Service</th>
                 <th className="w-1/12">Qty</th>
-                <th className="w-2/12">Unit Price</th>
-                <th className="w-1/12">Discount (%)</th>
-                <th className="w-2/12">Net Amount</th>
+                <th className="w-2/12 whitespace-nowrap">Unit Price</th>
+                <th className="w-1/12 whitespace-nowrap">Discount (%)</th>
+                <th className="w-2/12 whitespace-nowrap">Net Amount</th>
               </tr>
             </thead>
 

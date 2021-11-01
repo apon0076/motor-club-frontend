@@ -15,10 +15,10 @@ export default function Index() {
   }, []);
   return (
     <div className="flex">
-      <div className="w-2/12">
+      <div className="w-2/12 sidebarSection">
         <Sidebar />
       </div>
-      <div className="w-10/12 px-6 py-20">
+      <div className="w-10/12 px-6 py-20 bodySection">
         <div className="grid grid-cols-3 gap-10 mt-10">
           <Link to="/search-by-customer">
             <div className="border border-black rounded-lg dashboard__dashboard--card flex items-center cursor-pointer">

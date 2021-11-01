@@ -114,10 +114,10 @@ export default function Index() {
   console.log(data);
   return (
     <div className="flex">
-      <div className="w-2/12">
-        <Sidebar />
-      </div>
-      <div className="w-10/12 px-6 py-20 mt-8">
+      <div className="w-2/12 sidebarSection">
+                <Sidebar/>
+            </div>
+            <div className="w-10/12 px-6 py-20 mt-10 bodySection">
         <form onSubmit={handleSubmit(onSubmit)}>
           <p>Customer Information</p>
           <div className="border border-black rounded-md p-4">
@@ -186,9 +186,7 @@ export default function Index() {
                     setAddress({ ...address, email: e.target.value })
                   }
                 />
-                {/* {!data?.customer?.email && !address.email && (
-                  <p className="text-xs text-red-500">Address is required</p>
-                )} */}
+                
               </div>
             </div>
           </div>

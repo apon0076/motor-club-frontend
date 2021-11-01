@@ -15,7 +15,8 @@ export default function CreateInvoice() {
   const carId = useSelector((state) => state.invoice.carId);
   const invoiceId = useSelector((state) => state.invoice.invoiceId);
   const invoice = useSelector((state) => state.invoice.invoice);
-  console.log(invoice);
+  const data = useSelector((state) => state.registration.oldReg);
+  console.log("data", data);
   const [inputList, setInputList] = useState([
     {
       task_name: "",
@@ -77,6 +78,7 @@ export default function CreateInvoice() {
     if(oldReg?.customer){
       setValue("vehicle_model",oldReg?.vachele[0]?.registration_no);
       setValue("customer_name",oldReg?.customer?.name);
+      setValue("email",oldReg?.customer?.email);
       setReg_no(oldReg?.vachele[0]?.registration_no);
       // setValue("vehicle_reg_no",oldReg?.vachele[0]?.registration_no);
     }
@@ -118,10 +120,10 @@ export default function CreateInvoice() {
   const handleRoute = () => {};
   return (
     <div className="flex">
-      <div className="w-2/12">
+      <div className="w-2/12 sidebarSection">
         <Sidebar />
       </div>
-      <div className="w-10/12 px-6 py-20 mt-10">
+      <div className="w-10/12 px-6 py-20 mt-10 bodySection">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-2 gap-5">
             <div>
@@ -176,11 +178,12 @@ export default function CreateInvoice() {
               <input
                 className="border border-black outline-none px-2 py-1 w-8/12"
                 type="email"
-                {...register("email", { required: true })}
+                defaultValue={
+                  data?.customer?.email ? data?.customer?.email : ""
+                }
+                {...register("email")}
               />
-              {errors.email && (
-                <p className="text-xs text-red-500">Email is required</p>
-              )}
+              
             </div>
 
             <div>
