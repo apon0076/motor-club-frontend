@@ -168,7 +168,6 @@ export default function Invoice() {
               <p className="font-medium text-sm">
                 **Note: There is no warranty or guarantee of AC service
               </p>
-              <p className="font-medium text-sm">All prices are vat included</p>
             </div>
             <div className="flex items-center justify-center flex-col">
               <p className="font-medium text-sm">Motors Club</p>
