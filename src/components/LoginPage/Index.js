@@ -1,18 +1,17 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router";
-import { toast, ToastContainer } from "react-toastify";
+import { useHistory } from "react-router";
+import { ToastContainer, toast } from "react-toastify";
 import { userLogin } from "../../store/User/userActions";
 import Logo from "./../../assets/logo.jpg";
+import { useEffect } from "react";
 
 export default function Index() {
   const user = useSelector((state) => state.user);
-  console.log(user);
   const { register, handleSubmit } = useForm();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { pathname } = useLocation();
   const onSubmit = (data) => {
     dispatch(userLogin(data));
 
@@ -48,12 +47,22 @@ export default function Index() {
             {...register("password")}
           />
 
-          <div className="login__btn--section mt-10">
-            <input
-              className="login__btn cursor-pointer"
-              type="submit"
-              value="Login"
-            />
+          <div className="login__btn--section  mt-10">
+            {user.isLoading ? (
+              <button
+                disabled
+                className="flex items-center justify-center login__btn cursor-pointer w-full py-2 opacity-60"
+              >
+                <div class="w-5 h-5 border-4 border-teal-600 rounded-full loader mr-2"></div>
+                <p>Signing...</p>
+              </button>
+            ) : (
+              <input
+                className="login__btn cursor-pointer w-full py-2"
+                type="submit"
+                value="SIGN IN"
+              />
+            )}
           </div>
           <ToastContainer />
         </form>

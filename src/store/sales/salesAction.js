@@ -36,11 +36,11 @@ export function fetchSalesList() {
     }
   };
 }
-export function fetchSalesListPagination() {
+export function fetchSalesListPagination(page_number) {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/customer/sales?page=1`
+        `${process.env.REACT_APP_BACKEND_URL}/customer/sales?page=${page_number}`
       );
       dispatch(fetchSalesPagination(response.data));
     } catch (error) {

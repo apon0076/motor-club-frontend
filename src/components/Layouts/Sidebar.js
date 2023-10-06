@@ -1,6 +1,4 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import { RiDashboardFill } from "react-icons/ri";
 import {
   FaCarSide,
   FaFileInvoiceDollar,
@@ -10,8 +8,11 @@ import {
   FaWindowMaximize,
 } from "react-icons/fa";
 import { IoLogoUsd } from "react-icons/io";
-import { userLogOut } from "../../store/User/userActions";
+import { RiDashboardFill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { userLogOut } from "../../store/User/userActions";
+import { MdInventory } from "react-icons/md";
 
 export default function Sidebar() {
   const dispatch = useDispatch();
@@ -30,6 +31,15 @@ export default function Sidebar() {
       >
         <RiDashboardFill className="sideBar--icons" />
         Dashboard
+      </NavLink>
+
+      <NavLink
+        className="sideBar"
+        activeClassName="sideBar--active"
+        to="/add-user"
+      >
+        <FaUsers className="sideBar--icons" />
+        Add User
       </NavLink>
 
       <NavLink
@@ -84,6 +94,24 @@ export default function Sidebar() {
       >
         <IoLogoUsd className="sideBar--icons" />
         Sales
+      </NavLink>
+
+      <NavLink
+        className="sideBar"
+        activeClassName="sideBar--active"
+        to="/sales-report"
+      >
+        <FaFileInvoiceDollar className="sideBar--icons" />
+        Sales Report
+      </NavLink>
+
+      <NavLink
+        className="sideBar"
+        activeClassName="sideBar--active"
+        to="/inventory-list"
+      >
+        <MdInventory className="sideBar--icons" />
+        Inventory
       </NavLink>
 
       <button className="sideBar w-full" onClick={() => dispatch(userLogOut())}>

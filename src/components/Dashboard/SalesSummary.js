@@ -1,13 +1,17 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getCarId, getCustomerId, getInvoiceId } from "../../store/Invoice/invoiceAction";
+import {
+  getCarId,
+  getCustomerId,
+  getInvoiceId,
+} from "../../store/Invoice/invoiceAction";
 import { fetchSalesList } from "../../store/sales/salesAction";
 
 export default function SalesSummary() {
   const dispatch = useDispatch();
   const sales = useSelector((state) => state.sales.salesList);
-  console.log("adasdad", sales);
+
   useEffect(() => {
     dispatch(fetchSalesList());
   }, []);
@@ -15,9 +19,7 @@ export default function SalesSummary() {
   sales?.data
     ?.filter((sale, index) => index < 10)
     ?.map((list) => (sum += Number(list?.final_price)));
-  console.log("====================================");
-  console.log(sales);
-  console.log("====================================");
+
   const getId = (user, car, invoice) => {
     dispatch(getInvoiceId(invoice));
     dispatch(getCustomerId(user));
@@ -52,15 +54,10 @@ export default function SalesSummary() {
                     <td>{list?.final_price}</td>
                     <td>
                       <Link to={`/view-invoice/${list?.id}`}>
-
                         <button
                           className="text-white p-2 bg-red-800 transition-all ease-in-out hover:bg-red-900"
                           onClick={() =>
-                            getId(
-                              list?.customer_id,
-                              list?.vehicle_id,
-                              list?.id
-                            )
+                            getId(list?.customer_id, list?.vehicle_id, list?.id)
                           }
                         >
                           Details

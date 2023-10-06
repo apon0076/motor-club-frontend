@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Spinner Animation Start */
+@keyframes loader-rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  border-right-color: transparent;
+  animation: loader-rotate 1s linear infinite;
+}
+
+/* Spinner Animation End */
 .login__page {
   display: flex;
   align-items: center;
@@ -39,7 +55,6 @@
 }
 .login__btn {
   background-color: rgb(134, 9, 9);
-  padding: 5px 15px;
   border: none;
   margin-top: 10px;
   font-weight: 600;
@@ -178,6 +193,37 @@
 .sidebarToggleSection {
   z-index: 1000;
 }
+.add-user-text-area-width {
+  width: calc(83.33% + 20px);
+}
+
+/* Inventory CSS Start */
+.inventory-container {
+  margin-top: -24px;
+  margin-left: -24px;
+  margin-right: -24px;
+}
+.inventory-section {
+  padding-top: 72px;
+}
+.inventory-filter-btn {
+  display: none;
+}
+/* Inventory CSS End */
+
+/* Reset CSS Start */
+/* Standard syntax */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+/* Reset CSS End */
+
 @media print {
   header,
   footer,
@@ -192,11 +238,6 @@
     display: none !important;
     width: 0 !important;
   }
-  /* .invoicePrint {
-    width: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  } */
 
   .bodySection {
     width: 100% !important;
@@ -249,6 +290,18 @@
   display: none;
   margin-right: 1.5rem;
 }
+.shadowed-input-box {
+  box-shadow: 0px 1px 5px #c7c7c7;
+}
+.react-responsive-modal-modal {
+  max-width: 1800px !important;
+}
+.responsive-modal-lg {
+  width: 1200px;
+}
+.responsive-modal-md {
+  width: 800px;
+}
 @media print {
   * {
     font-size: 12px !important;
@@ -262,15 +315,25 @@
   .invoice__table--td {
     width: 150% !important;
   }
+  .sales-report-back-button {
+    display: none;
+  }
+  .sales-report-print-bar {
+    display: none;
+  }
+  .print-btn {
+    display: none;
+  }
+}
+@media only screen and (max-width: 1300px) {
+  .responsive-modal-lg {
+    width: 950px;
+  }
 }
 @media only screen and (max-width: 1024px) {
   * {
     font-size: 98%;
   }
-  /* .navLogo{
-    height: 10px;
-    width: auto;
-  } */
   .navbar__section {
     height: 5vh;
   }
@@ -279,11 +342,44 @@
   }
   .bodySection {
     width: 100%;
+    margin-top: -50px;
   }
   .sidebarSection {
     width: 0%;
   }
   .menuToggle__icon {
     display: block;
+  }
+  .inventory-header {
+    width: 100%;
+  }
+  .responsive-modal-lg {
+    width: 650px;
+  }
+  .responsive-modal-md {
+    width: 650px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .add-user-text-area-width {
+    width: 100%;
+  }
+  .inventory-filter-btn {
+    display: inline-flex;
+  }
+  .inventory-sidebar {
+    display: none;
+  }
+  .inventory-sidebar-fixed-container {
+    margin-top: -5px;
+  }
+  .inventory-body {
+    width: 100%;
+  }
+  .responsive-modal-lg {
+    width: 290px;
+  }
+  .responsive-modal-md {
+    width: 290px;
   }
 }
