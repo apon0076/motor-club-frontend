@@ -1,6 +1,8 @@
 import {
-  FETCH_INVOICE_LIST,
-  FETCH_INVOICE_LIST_PAGINATION,
+  FETCH_INVOICE_LIST_REQUEST,
+  FETCH_INVOICE_LIST_SUCCESS,
+  FETCH_INVOICE_LIST_ERROR,
+  FETCH_INVOICE_LIST_RESET,
   FETCH_INVOICE,
   INVOICE_ID,
   USER_ID,
@@ -18,16 +20,18 @@ const initialState = {
 
 const invoiceReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_INVOICE_LIST:
+    case FETCH_INVOICE_LIST_REQUEST:
+      return { ...state, isLoading: true };
+    case FETCH_INVOICE_LIST_SUCCESS:
       return {
         ...state,
+        isLoading: false,
         invoiceList: action.payload,
       };
-    case FETCH_INVOICE_LIST_PAGINATION:
-      return {
-        ...state,
-        invoiceList: action.payload,
-      };
+    case FETCH_INVOICE_LIST_ERROR:
+      return { ...state, isLoading: false, error: action.payload };
+    case FETCH_INVOICE_LIST_RESET:
+      return { invoiceList: [], isLoading: false, error: null };
     case FETCH_INVOICE:
       return {
         ...state,

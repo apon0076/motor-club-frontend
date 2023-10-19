@@ -302,6 +302,8 @@ input[type="number"] {
 .responsive-modal-md {
   width: 800px;
 }
+
+
 @media print {
   * {
     font-size: 12px !important;

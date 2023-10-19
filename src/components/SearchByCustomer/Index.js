@@ -59,6 +59,7 @@ export default function Index() {
             ))}
           </tbody>
         </table>
+        {console.log('customer', customer)}
         <Pagination
           totalPage={customer?.last_page}
           pageNumber={customer?.current_page}

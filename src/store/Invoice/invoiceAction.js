@@ -1,25 +1,15 @@
 import axios from "axios";
 import {
-  FETCH_INVOICE_LIST,
-  FETCH_INVOICE_LIST_PAGINATION,
+  CAR_ID,
   FETCH_INVOICE,
+  FETCH_INVOICE_LIST_REQUEST,
+  FETCH_INVOICE_LIST_SUCCESS,
+  FETCH_INVOICE_LIST_ERROR,
   INVOICE_ID,
   USER_ID,
-  CAR_ID,
 } from "./invoiceActionTypes";
 
-function fetchInvoiceList(data) {
-  return {
-    type: FETCH_INVOICE_LIST,
-    payload: data,
-  };
-}
-function invoicePagination(data) {
-  return {
-    type: FETCH_INVOICE_LIST_PAGINATION,
-    payload: data,
-  };
-}
+
 function fetchInvoice(data) {
   return {
     type: FETCH_INVOICE,
@@ -44,30 +34,26 @@ export function getCarId(data) {
     payload: data,
   };
 }
-export function fetchAllInvoiceList() {
-  return async (dispatch) => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/customer/invoice`
-      );
-      dispatch(fetchInvoiceList(response.data));
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-}
-export function invoiceListPagination(pageNumber) {
-  return async (dispatch) => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/customer/invoice?page=${Number(pageNumber)}`
-      );
-      dispatch(invoicePagination(response.data));
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-}
+
+// Fetch Invoice List
+export const fetchAllInvoiceList = (search, page) => async (dispatch) => {
+  try {
+    dispatch({ type: FETCH_INVOICE_LIST_REQUEST });
+    const response = await axios.get(
+      `${process.env.REACT_APP_BACKEND_URL}/customer/invoice?search=${search}&page=${page}`
+    );
+    dispatch({
+      type: FETCH_INVOICE_LIST_SUCCESS,
+      payload: response,
+    });
+  } catch (error) {
+    dispatch({
+      type: FETCH_INVOICE_LIST_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
 export function fetchInvoices(userID, carId, invoiceId) {
   return async (dispatch) => {
     try {

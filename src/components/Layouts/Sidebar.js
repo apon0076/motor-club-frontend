@@ -54,7 +54,7 @@ export default function Sidebar() {
       <NavLink
         className="sideBar"
         activeClassName="sideBar--active"
-        to="/invoice"
+        to="/invoice?search=&page=1"
       >
         <FaFileInvoiceDollar className="sideBar--icons" />
         Invoice
