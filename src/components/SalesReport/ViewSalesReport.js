@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { BsPrinterFill } from "react-icons/bs";
 import { IoChevronBackCircleSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import { BsPrinterFill } from "react-icons/bs";
 
 const ViewSalesReport = () => {
   // Need to remove this state dynamic time
@@ -274,17 +274,17 @@ const ViewSalesReport = () => {
                 {index === 0 ? (
                   <td
                     rowspan={expenses.length}
-                    class="border border-gray-500 p-2 font-bold text-center"
+                    className="border border-gray-500 p-2 font-bold text-center"
                   >
                     Date
                     <br />
                     10.2.2023
                   </td>
                 ) : null}
-                <td class="border border-gray-500 ">{data.voucherNo}</td>
-                <td class="border border-gray-500 ">{data.description}</td>
-                <td class="border border-gray-500 ">{data.amount}</td>
-                <td class="border border-gray-500 ">{data.total}</td>
+                <td className="border border-gray-500 ">{data.voucherNo}</td>
+                <td className="border border-gray-500 ">{data.description}</td>
+                <td className="border border-gray-500 ">{data.amount}</td>
+                <td className="border border-gray-500 ">{data.total}</td>
               </tr>
             ))}
           </tbody>

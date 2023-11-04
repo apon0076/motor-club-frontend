@@ -13,9 +13,7 @@ import {
 export default function ServiceHistory({ invoice }) {
   const customerId = useParams();
   const id = customerId.id;
-  console.log("customer id", id);
   const dispatch = useDispatch();
-  console.log("service history", invoice);
   const handlePagination = (e) => {
     const pageNumber = Number(e.target.getAttribute("page_number"));
     dispatch(serviceHistoryPagination(pageNumber, id));

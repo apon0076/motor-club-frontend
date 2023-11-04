@@ -6,7 +6,6 @@ export default function AddAnother({ setOtherData, otherData, addNewBrand }) {
   const [errors, setErrors] = useState({});
   const { register, handleSubmit,reset } = useForm();
   const onSubmit = (data) => {
-    console.log(data);
     reset();
   };
   const onSave = () => {
@@ -34,7 +33,6 @@ export default function AddAnother({ setOtherData, otherData, addNewBrand }) {
               {...register("brand", { required: true })}
               onChange={(e) => {
                 setOtherData({ ...otherData, brand: e.target.value });
-                console.log(e.target.value);
               }}
             />
             {errors.brand === "" && (
@@ -113,7 +111,6 @@ export default function AddAnother({ setOtherData, otherData, addNewBrand }) {
           <button
             onClick={(e) => {
               e.preventDefault();
-              console.log("yes");
               onSave();
               addNewBrand(otherData);
               toast.success("New Vehicle Added")

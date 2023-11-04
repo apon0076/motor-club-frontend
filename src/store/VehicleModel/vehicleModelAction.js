@@ -1,31 +1,13 @@
 import axios from "axios";
 import {
   CUSTOMER_ID,
-  FETCH_VEHICLE_LIST,
-  SEARCH_VEHICLE_MODEL,
+  FETCH_VEHICLE_LIST_ERROR,
+  FETCH_VEHICLE_LIST_REQUEST,
+  FETCH_VEHICLE_LIST_SUCCESS,
   VEHICLE_DETAILS,
-  VEHICLE_DETAILS_ID,
-  VEHICLE_LIST_PAGINATION,
+  VEHICLE_DETAILS_ID
 } from "./vehicleModelActionTypes";
 
-function fetchVehicle(data) {
-  return {
-    type: FETCH_VEHICLE_LIST,
-    payload: data,
-  };
-}
-function vehiclePagination(data) {
-  return {
-    type: VEHICLE_LIST_PAGINATION,
-    payload: data,
-  };
-}
-function searchVehicleModel(data) {
-  return {
-    type: SEARCH_VEHICLE_MODEL,
-    payload: data,
-  };
-}
 function vehicleModelDetails(data) {
   return {
     type: VEHICLE_DETAILS,
@@ -44,44 +26,7 @@ export function customerDetails_id(user) {
     payload: user,
   };
 }
-export function fetchVehicleList() {
-  return async (dispatch) => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/carlist`
-      );
-      dispatch(fetchVehicle(response.data));
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-}
 
-export function vehicleListPagination(pageNumber) {
-  return async (dispatch) => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/carlist?page=${pageNumber}`
-      );
-      dispatch(vehiclePagination(response.data));
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-}
-
-export function searchByVehicleModel(search = "") {
-  return async (dispatch) => {
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/search-by-model?search=${search}`
-      );
-      dispatch(searchVehicleModel(response.data));
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-}
 export function fetchVehicleModelDetails(user, car) {
   return async (dispatch) => {
     try {
@@ -94,3 +39,22 @@ export function fetchVehicleModelDetails(user, car) {
     }
   };
 }
+
+// Fetch All Vehicle
+export const fetchAllVehicle = (search, page) => async (dispatch) => {
+  try {
+    dispatch({ type: FETCH_VEHICLE_LIST_REQUEST });
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/search-by-model?search=${search}&page=${page}`
+    );
+    dispatch({
+      type: FETCH_VEHICLE_LIST_SUCCESS,
+      payload: response,
+    });
+  } catch (error) {
+    dispatch({
+      type: FETCH_VEHICLE_LIST_ERROR,
+      payload: error.message,
+    });
+  }
+};

@@ -16,6 +16,7 @@ const initialState = {
   invoiceId: {},
   userID: {},
   carId: {},
+  error: null,
 };
 
 const invoiceReducer = (state = initialState, action) => {

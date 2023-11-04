@@ -1,85 +1,103 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FaSearch } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   customerDetails_id,
-  searchByVehicleModel,
   vehicleDetailsId,
-  vehicleListPagination,
 } from "../../store/VehicleModel/vehicleModelAction";
+import Loader from "../Loader/Loader";
 import Pagination from "../Pagination/Pagination";
 
-export default function VehicleList({ vehicleList }) {
-  const [search, setSearch] = useState("");
+export default function VehicleList({
+  vehicleList,
+  setSearchVehicleModel,
+  searchVehicleModel,
+  isLoading,
+}) {
   const dispatch = useDispatch();
-  console.log("list of cars", vehicleList);
+  const history = useHistory();
+
+  // Handle Pagination
   const handlePagination = (e) => {
     const pageNumber = Number(e.target.getAttribute("page_number"));
-    dispatch(vehicleListPagination(pageNumber));
+    history.push(
+      `/search-by-vehicle-model?search=${searchVehicleModel}&page=${pageNumber}`
+    );
   };
-  const handleSearchVechile = (e) => {
-    setSearch(e.target.value);
-  };
-  useEffect(() => {
-    dispatch(searchByVehicleModel(search));
-  }, [search]);
+
+  // Get Car ID
   const getId = (user, car) => {
     dispatch(customerDetails_id(user));
     dispatch(vehicleDetailsId(car));
   };
 
   return (
-    <div>
+    <>
       <div className="flex items-center justify-end">
         <div className="relative">
           <input
-            className="border border-black px-8 py-1 outline-none"
+            className="border border-gray-500 px-8 py-1 rounded-lg"
             type="text"
-            onChange={(e) => dispatch(searchByVehicleModel(e.target.value))}
+            onChange={(e) => setSearchVehicleModel(e.target.value)}
           />
           <FaSearch className="absolute top-2 left-2" />
         </div>
+        <button
+          className="bg-red-800 text-white py-1 border border-red-800 ml-5 px-4 transition-all ease-in-out rounded-lg hover:bg-red-900 flex items-center"
+          onClick={() =>
+            history.push(
+              `/search-by-vehicle-model?search=${searchVehicleModel}&page=1`
+            )
+          }
+        >
+          <FaSearch className="mr-2" />
+          Search
+        </button>
       </div>
-      <div className="mt-5 border border-gray-400 rounded-md p-5">
-        <table className="common__table">
-          <thead>
-            <tr>
-              <th>Vehicle Model</th>
-              <th>Model Year</th>
-              <th>Owner</th>
-              <th>Registration No</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {vehicleList?.data?.map((data, index) => (
-              <tr key={index}>
-                <td>{data?.model}</td>
-                <td>{data?.model_year}</td>
-                <td>{data?.customer_name}</td>
-                <td>{data?.registration_no}</td>
-                <td>
-                  <Link to="/vehicle-profile">
-                    <button
-                      className="text-white p-2 bg-red-800 transition-all ease-in-out hover:bg-red-900"
-                      onClick={() => getId(data?.customer_id, data?.id)}
-                    >
-                      Details
-                    </button>
-                  </Link>
-                </td>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className="mt-5 border border-gray-400 rounded-md p-5">
+          <table className="common__table">
+            <thead>
+              <tr>
+                <th>Vehicle Model</th>
+                <th>Model Year</th>
+                <th>Owner</th>
+                <th>Registration No</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        <Pagination
-          totalPage={vehicleList?.last_page}
-          pageNumber={vehicleList?.current_page}
-          pageLinks={vehicleList?.links}
-          handlePagination={handlePagination}
-        />
-      </div>
-    </div>
+            </thead>
+            <tbody>
+              {vehicleList?.data?.data?.map((data, index) => (
+                <tr key={index}>
+                  <td>{data?.model}</td>
+                  <td>{data?.model_year}</td>
+                  <td>{data?.customer_name}</td>
+                  <td>{data?.registration_no}</td>
+                  <td>
+                    <Link to="/vehicle-profile">
+                      <button
+                        className="text-white p-2 bg-red-800 transition-all ease-in-out hover:bg-red-900"
+                        onClick={() => getId(data?.customer_id, data?.id)}
+                      >
+                        Details
+                      </button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <Pagination
+            totalPage={vehicleList?.data?.last_page}
+            pageNumber={vehicleList?.data?.current_page}
+            pageLinks={vehicleList?.data?.links}
+            handlePagination={handlePagination}
+          />
+        </div>
+      )}
+    </>
   );
 }

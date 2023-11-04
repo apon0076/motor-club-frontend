@@ -159,14 +159,14 @@ const AddSalesReport = () => {
                 {index === 0 ? (
                   <td
                     rowspan={expenses.length}
-                    class="border border-gray-500 p-2 font-bold text-center"
+                    className="border border-gray-500 p-2 font-bold text-center"
                   >
                     Date
                     <br />
                     10.2.2023
                   </td>
                 ) : null}
-                <td class="border border-gray-500 ">
+                <td className="border border-gray-500 ">
                   <input
                     placeholder="Enter Voucher No."
                     className="p-2 outline-none w-full"
@@ -176,7 +176,7 @@ const AddSalesReport = () => {
                     onChange={(e) => handleChange(e, index)}
                   />
                 </td>
-                <td class="border border-gray-500 ">
+                <td className="border border-gray-500 ">
                   <input
                     placeholder="Enter Description"
                     className="p-2 outline-none w-full"
@@ -186,7 +186,7 @@ const AddSalesReport = () => {
                     onChange={(e) => handleChange(e, index)}
                   />
                 </td>
-                <td class="border border-gray-500 ">
+                <td className="border border-gray-500 ">
                   <input
                     placeholder="Enter Amt"
                     className="p-2 outline-none w-full"
@@ -196,7 +196,7 @@ const AddSalesReport = () => {
                     onChange={(e) => handleChange(e, index)}
                   />
                 </td>
-                <td class="border border-gray-500 ">
+                <td className="border border-gray-500 ">
                   <input
                     placeholder="Enter Total"
                     className="p-2 outline-none w-full"
@@ -206,7 +206,7 @@ const AddSalesReport = () => {
                     onChange={(e) => handleChange(e, index)}
                   />
                 </td>
-                <td class="border border-gray-500 p-2 ">
+                <td className="border border-gray-500 p-2 ">
                   {expenses.length - 1 === index ? (
                     <button
                       onClick={() => handleAddExpenses()}

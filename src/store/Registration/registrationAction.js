@@ -16,7 +16,6 @@ function registration(data) {
 export const fetchOldRegistration = (data) => {
   return async (dispatch, getState) => {
     const { user } = getState();
-    console.log(user);
     try {
       const res = axios
         .post(
@@ -39,7 +38,6 @@ export const fetchOldRegistration = (data) => {
 export const fetchRegistration = (data) => {
   return async (dispatch, getState) => {
     const { user } = getState();
-    console.log(user.token);
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/customer/registration`,

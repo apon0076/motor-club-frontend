@@ -1,7 +1,6 @@
 import React from 'react'
 
 export default function ListOfVehicle({carlist}) {
-    console.log(carlist);
     return (
         <div className="mt-10">
             <p className="font-semibold text-lg">List of vehicle:</p>

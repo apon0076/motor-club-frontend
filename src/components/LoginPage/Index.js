@@ -53,7 +53,7 @@ export default function Index() {
                 disabled
                 className="flex items-center justify-center login__btn cursor-pointer w-full py-2 opacity-60"
               >
-                <div class="w-5 h-5 border-4 border-teal-600 rounded-full loader mr-2"></div>
+                <div className="w-5 h-5 border-4 border-teal-600 rounded-full loader mr-2"></div>
                 <p>Signing...</p>
               </button>
             ) : (

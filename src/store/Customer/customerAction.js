@@ -1,25 +1,14 @@
 import axios from "axios";
 import {
   ADD_NEW_CAR,
-  CUSTOMER_LIST_PAGINATION,
   CUSTOMER_PROFILE,
-  FETCH_CUSTOMER_LIST,
-  SERVICE_HISTORY_PAGINATION,
+  FETCH_CUSTOMER_LIST_ERROR,
+  FETCH_CUSTOMER_LIST_REQUEST,
+  FETCH_CUSTOMER_LIST_SUCCESS,
+  SERVICE_HISTORY_PAGINATION
 } from "./customerActionTypes";
 
-function fetchCustomer(data) {
-  return {
-    type: FETCH_CUSTOMER_LIST,
-    payload: data,
-  };
-}
 
-function customerPagination(data) {
-  return {
-    type: CUSTOMER_LIST_PAGINATION,
-    payload: data,
-  };
-}
 function servicePagination(data) {
   return {
     type: SERVICE_HISTORY_PAGINATION,
@@ -41,29 +30,25 @@ function addNewBrand(data) {
   };
 }
 
-export function fetchAllCustomers(search = "") {
-  return (dispatch) => {
-    axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/customer?search=${search}`)
-      .then((res) => {
-        dispatch(fetchCustomer(res.data));
-      })
-      .catch((err) => console.log(err.message));
-  };
-}
+// Fetch All Customer List
+export const fetchAllCustomers = (search, page) => async (dispatch) => {
+  try {
+    dispatch({ type: FETCH_CUSTOMER_LIST_REQUEST });
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/customer?search=${search}&page=${page}`
+    );
+    dispatch({
+      type: FETCH_CUSTOMER_LIST_SUCCESS,
+      payload: response,
+    });
+  } catch (error) {
+    dispatch({
+      type: FETCH_CUSTOMER_LIST_ERROR,
+      payload: error.message,
+    });
+  }
+};
 
-export function customerListPagination(pageNumber) {
-  return async (dispatch) => {
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/customer?page=${pageNumber}`
-      );
-      dispatch(customerPagination(response.data));
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-}
 export function fetchCustomerProfile(id) {
   return async (dispatch) => {
     try {

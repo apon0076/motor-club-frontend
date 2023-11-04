@@ -8,11 +8,11 @@ import {
   FaWindowMaximize,
 } from "react-icons/fa";
 import { IoLogoUsd } from "react-icons/io";
+import { MdInventory } from "react-icons/md";
 import { RiDashboardFill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { userLogOut } from "../../store/User/userActions";
-import { MdInventory } from "react-icons/md";
 
 export default function Sidebar() {
   const dispatch = useDispatch();
@@ -54,7 +54,7 @@ export default function Sidebar() {
       <NavLink
         className="sideBar"
         activeClassName="sideBar--active"
-        to="/invoice?search=&page=1"
+        to="/invoice"
       >
         <FaFileInvoiceDollar className="sideBar--icons" />
         Invoice

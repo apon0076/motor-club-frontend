@@ -8,10 +8,7 @@ const AddUser = () => {
 
   // Get Response After Post
   const {isLoading,success,addUsers, error} = useSelector((state) => state.addUser);
-  console.log('isLoading', isLoading);
-  console.log('success', success);
-  console.log('addUsers', addUsers);
-  console.log('error', error);
+
   // Destructure useForm of react-hook-form
   const {
     register,
@@ -21,7 +18,6 @@ const AddUser = () => {
 
   // Form Submit
   const onSubmit = (data) => {
-    console.log(data);
     if (
       Number.isInteger(Number(data.phone)) &&
       data.password === data.retypePassword
