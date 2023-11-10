@@ -1,29 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import { userLogin } from "../../store/User/userActions";
 import Logo from "./../../assets/logo.jpg";
-import { useEffect } from "react";
 
 export default function Index() {
-  const user = useSelector((state) => state.user);
+  // Fetch Data From Reducer
+  const { token, isLoading, error } = useSelector((state) => state.user);
   const { register, handleSubmit } = useForm();
   const history = useHistory();
   const dispatch = useDispatch();
+
+  // On Submit Login Form
   const onSubmit = (data) => {
     dispatch(userLogin(data));
-
-    setTimeout(() => {
-      const token = window.localStorage.getItem("authToken");
-      if (token !== null) {
-        history.push("/");
-      } else {
-        toast.error("Email and password is not matched");
-      }
-    }, [2000]);
   };
+
+  // Token Authentication
+  useEffect(() => {
+    if (token) {
+      window.localStorage.setItem("authToken", token.data.token);
+      history.push("/");
+    } else if (error !== null && error !== undefined) {
+      toast.error("Email and password do not match");
+    }
+  }, [token, error, history]);
+
   return (
     <div className="login__page">
       <div className="login__section">
@@ -48,7 +52,7 @@ export default function Index() {
           />
 
           <div className="login__btn--section  mt-10">
-            {user.isLoading ? (
+            {isLoading ? (
               <button
                 disabled
                 className="flex items-center justify-center login__btn cursor-pointer w-full py-2 opacity-60"

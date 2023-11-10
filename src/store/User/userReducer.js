@@ -1,49 +1,42 @@
 import {
-  AUTH_ERROR,
-  AUTH_PROCESS,
-  USER_LOGIN,
   USER_LOGOUT,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
   USER_REGISTER_ERROR,
   USER_REGISTER_RESET,
+  USER_LOGIN_REQUEST,
+  USER_LOGIN_SUCCESS,
+  USER_LOGIN_ERROR,
+  USER_LOGIN_RESET,
 } from "./userActionTypes";
 const initialState = {
-  token: window.localStorage.getItem("authToken") || "",
-  error: "",
+  token: "",
   message: "",
   currentUser: {},
   addUsers: [],
   isLoading: false,
   success: true,
+  error: null,
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case USER_LOGIN:
-      window.localStorage.setItem("authToken", action.payload.token);
-      window.localStorage.setItem("authEmail", action.payload.email);
+    case USER_LOGIN_REQUEST:
+      return { ...state, isLoading: true };
+    case USER_LOGIN_SUCCESS:
       return {
         ...state,
-        token: action.payload.token,
-        email: action.payload.email,
+        token: action.payload,
         isLoading: false,
       };
+    case USER_LOGIN_ERROR:
+      return { ...state, isLoading: false, error: action.payload };
+    case USER_LOGIN_RESET:
+      return { invoiceList: [], isLoading: false, error: null };
     case USER_LOGOUT:
       window.localStorage.removeItem("authToken");
       return {
         token: "",
-        isLoading: false,
-      };
-    case AUTH_PROCESS:
-      return {
-        ...state,
-        isLoading: true,
-      };
-    case AUTH_ERROR:
-      return {
-        ...state,
-        error: action.payload,
         isLoading: false,
       };
     default:

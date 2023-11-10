@@ -1,48 +1,33 @@
 import axios from "axios";
 import {
-  AUTH_ERROR,
-  AUTH_PROCESS,
-  USER_LOGIN,
+  USER_LOGIN_REQUEST,
+  USER_LOGIN_SUCCESS,
+  USER_LOGIN_ERROR,
   USER_LOGOUT,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
   USER_REGISTER_ERROR,
 } from "./userActionTypes";
 
-function authProcess() {
-  return {
-    type: AUTH_PROCESS,
-  };
-}
-
-function loginDone(user) {
-  return {
-    type: USER_LOGIN,
-    payload: user,
-  };
-}
-function authFail(error) {
-  return {
-    type: AUTH_ERROR,
-    payload: error,
-  };
-}
-
-export function userLogin(userInfo) {
-  return async (dispatch) => {
-    dispatch(authProcess());
-    const { email } = userInfo;
-    try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/login`,
-        userInfo
-      );
-      dispatch(loginDone({ ...res.data, ...{ email } }));
-    } catch (error) {
-      dispatch(authFail(error.Error));
-    }
-  };
-}
+// Post Login API
+export const userLogin = (userInfo) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_LOGIN_REQUEST });
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/login`,
+      userInfo
+    );
+    dispatch({
+      type: USER_LOGIN_SUCCESS,
+      payload: response,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_LOGIN_ERROR,
+      payload: error.message,
+    });
+  }
+};
 
 export function userLogOut() {
   return {
