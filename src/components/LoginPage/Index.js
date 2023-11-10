@@ -21,7 +21,7 @@ export default function Index() {
   // Token Authentication
   useEffect(() => {
     if (token) {
-      window.localStorage.setItem("authToken", token.data.token);
+      window.localStorage.setItem("authToken", token);
       history.push("/");
     } else if (error !== null && error !== undefined) {
       toast.error("Email and password do not match");

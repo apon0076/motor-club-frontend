@@ -29,6 +29,7 @@ import AddSalesReport from "./components/SalesReport/AddSalesReport";
 import ViewSalesReport from "./components/SalesReport/ViewSalesReport";
 
 function App({ user }) {
+  console.log('user', user);
   const location = useLocation();
   const [sidebarToggle, setSidebarToggle] = useState(false);
   return (

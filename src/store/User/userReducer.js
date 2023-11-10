@@ -9,8 +9,9 @@ import {
   USER_LOGIN_ERROR,
   USER_LOGIN_RESET,
 } from "./userActionTypes";
+
 const initialState = {
-  token: "",
+  token: window.localStorage.getItem("authToken") || "",
   message: "",
   currentUser: {},
   addUsers: [],
@@ -26,7 +27,7 @@ const userReducer = (state = initialState, action) => {
     case USER_LOGIN_SUCCESS:
       return {
         ...state,
-        token: action.payload,
+        token: action.payload.data.token,
         isLoading: false,
       };
     case USER_LOGIN_ERROR:
