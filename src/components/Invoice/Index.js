@@ -32,6 +32,6 @@ export default function Index() {
         page !== null ? page : ""
       )
     );
-  }, [search, page]);
+  }, [dispatch, search, page]);
   return <InvoiceList invoiceList={invoiceList.data} isLoading={isLoading} />;
 }

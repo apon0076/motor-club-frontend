@@ -14,8 +14,6 @@ axios.interceptors.request.use((request) => {
   var token = localStorage.getItem("authToken");
   request.headers = {
     Authorization: `Bearer ${token}`,
-    // 'Accept': 'application/json',
-    // 'Content-Type': 'application/x-www-form-urlencoded'
   };
   return request;
 });

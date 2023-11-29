@@ -49,8 +49,8 @@ export default function SalesSummary() {
                 {salesList?.data?.data?.length &&
                   salesList?.data?.data
                     ?.filter((sale, index) => index < 10)
-                    ?.map((list) => (
-                      <tr>
+                    ?.map((list, i) => (
+                      <tr key={i}>
                         <td>{list?.id}</td>
                         <td>{list?.customer_name}</td>
                         <td>{list?.mobile}</td>

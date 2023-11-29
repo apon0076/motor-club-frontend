@@ -8,6 +8,14 @@ import {
   USER_LOGIN_SUCCESS,
   USER_LOGIN_ERROR,
   USER_LOGIN_RESET,
+  USER_LIST_REQUEST,
+  USER_LIST_SUCCESS,
+  USER_LIST_ERROR,
+  USER_LIST_RESET,
+  SINGLE_USER_REQUEST,
+  SINGLE_USER_SUCCESS,
+  SINGLE_USER_ERROR,
+  SINGLE_USER_RESET,
 } from "./userActionTypes";
 
 const initialState = {
@@ -15,6 +23,8 @@ const initialState = {
   message: "",
   currentUser: {},
   addUsers: [],
+  userList: [],
+  singleUser: {},
   isLoading: false,
   success: true,
   error: null,
@@ -33,7 +43,36 @@ const userReducer = (state = initialState, action) => {
     case USER_LOGIN_ERROR:
       return { ...state, isLoading: false, error: action.payload };
     case USER_LOGIN_RESET:
-      return { invoiceList: [], isLoading: false, error: null };
+      return { token: [], isLoading: false, error: null };
+
+    case USER_LIST_REQUEST:
+      return { ...state, isLoading: true };
+    case USER_LIST_SUCCESS:
+      return {
+        ...state,
+        userList: action.payload,
+        isLoading: false,
+      };
+    case USER_LIST_ERROR:
+      return { ...state, isLoading: false, error: action.payload };
+    case USER_LIST_RESET:
+      return { userList: [], isLoading: false, error: null };
+
+    // Single User Start
+    case SINGLE_USER_REQUEST:
+      return { ...state, isLoading: true };
+    case SINGLE_USER_SUCCESS:
+      return {
+        ...state,
+        singleUser: action.payload,
+        isLoading: false,
+      };
+    case SINGLE_USER_ERROR:
+      return { ...state, isLoading: false, error: action.payload };
+    case SINGLE_USER_RESET:
+      return { singleUser: [], isLoading: false, error: null };
+    // Single User End
+
     case USER_LOGOUT:
       window.localStorage.removeItem("authToken");
       return {

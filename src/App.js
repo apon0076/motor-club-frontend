@@ -27,9 +27,9 @@ import InventoryList from "./components/Inventory/Index";
 import SalesReport from "./components/SalesReport/Index";
 import AddSalesReport from "./components/SalesReport/AddSalesReport";
 import ViewSalesReport from "./components/SalesReport/ViewSalesReport";
+import UserList from "./components/AddUser/UserList";
 
 function App({ user }) {
-  console.log('user', user);
   const location = useLocation();
   const [sidebarToggle, setSidebarToggle] = useState(false);
   return (
@@ -191,6 +191,13 @@ function App({ user }) {
                 ) : (
                   <Redirect to="/user-login" />
                 )
+              }
+            />
+            <Route
+              exact
+              path="/user-list"
+              render={() =>
+                user?.token ? <UserList /> : <Redirect to="/user-login" />
               }
             />
           </Switch>
