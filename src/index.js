@@ -19,10 +19,19 @@ axios.interceptors.request.use((request) => {
 });
 
 // Axios Interceptors Response
-axios.interceptors.response.use((response) => {
-  console.log("response", response);
-  return response;
-});
+axios.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    // Check if the error status is 401 (Unauthorized)
+    if (error.response && error.response.status === 401) {
+      window.location.href = "/user-login";
+    }
+    // If it's not a 401 error, just return the error as usual
+    return Promise.reject(error);
+  }
+);
 
 ReactDOM.render(
   <React.StrictMode>

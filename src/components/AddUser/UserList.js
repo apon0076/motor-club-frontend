@@ -37,7 +37,7 @@ const UserList = () => {
   // API Call for User List
   useEffect(() => {
     dispatch(usersList(page !== null ? page : ""));
-  }, [dispatch, page]);
+  }, [dispatch, page, userModalOpen]);
 
   // Get Users Date from Reducer
   const { isLoading, userList, singleUser } = useSelector(
@@ -79,7 +79,9 @@ const UserList = () => {
                     <td>{data.name}</td>
                     <td>{data.email}</td>
                     <td>
-                      {Number(data.role) === 0 ? "Super Admin" : "General User"}
+                      {data.role === "admin"
+                        ? "Super Admin"
+                        : "General User"}
                     </td>
                     <td>
                       <button

@@ -2,32 +2,32 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import {
   Redirect,
-  Switch,
   Route,
+  Switch,
   useLocation,
   withRouter,
 } from "react-router-dom";
-import Navbar from "./components/Layouts/Navbar";
-import LoginIndex from "./components/LoginPage/Index";
+import AddUser from "./components/AddUser/AddUser";
+import UserList from "./components/AddUser/UserList";
 import DashboardIndex from "./components/Dashboard/Index";
-import RegIndex from "./components/Registration/Index";
-import InvoiceIndex from "./components/Invoice/Index";
+import InventoryList from "./components/Inventory/Index";
 import CreateInvoice from "./components/Invoice/CreateInvoice";
+import InvoiceIndex from "./components/Invoice/Index";
 import Invoice from "./components/Invoice/Invoice";
-import SearchByCustomerIndex from "./components/SearchByCustomer/Index";
+import Navbar from "./components/Layouts/Navbar";
+import Sidebar from "./components/Layouts/Sidebar";
+import SidebarToggle from "./components/Layouts/SidebarToggle";
+import LoginIndex from "./components/LoginPage/Index";
+import RegIndex from "./components/Registration/Index";
+import SalesIndex from "./components/Sales/Index";
+import AddSalesReport from "./components/SalesReport/AddSalesReport";
+import SalesReport from "./components/SalesReport/Index";
+import ViewSalesReport from "./components/SalesReport/ViewSalesReport";
 import CustomerProfile from "./components/SearchByCustomer/CustomerProfile";
+import SearchByCustomerIndex from "./components/SearchByCustomer/Index";
+import SearchByRegIndex from "./components/SearchByReg/Index";
 import SearchByVehicleModelIndex from "./components/SearchByVehicleModel/Index";
 import VehicleProfile from "./components/SearchByVehicleModel/VehicleProfile";
-import SearchByRegIndex from "./components/SearchByReg/Index";
-import SalesIndex from "./components/Sales/Index";
-import SidebarToggle from "./components/Layouts/SidebarToggle";
-import Sidebar from "./components/Layouts/Sidebar";
-import AddUser from "./components/AddUser/AddUser";
-import InventoryList from "./components/Inventory/Index";
-import SalesReport from "./components/SalesReport/Index";
-import AddSalesReport from "./components/SalesReport/AddSalesReport";
-import ViewSalesReport from "./components/SalesReport/ViewSalesReport";
-import UserList from "./components/AddUser/UserList";
 
 function App({ user }) {
   const location = useLocation();

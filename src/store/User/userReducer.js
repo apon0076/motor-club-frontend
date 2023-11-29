@@ -16,6 +16,10 @@ import {
   SINGLE_USER_SUCCESS,
   SINGLE_USER_ERROR,
   SINGLE_USER_RESET,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
+  UPDATE_USER_RESET,
 } from "./userActionTypes";
 
 const initialState = {
@@ -24,6 +28,7 @@ const initialState = {
   currentUser: {},
   addUsers: [],
   userList: [],
+  updateSingleUser: [],
   singleUser: {},
   isLoading: false,
   success: true,
@@ -71,8 +76,8 @@ const userReducer = (state = initialState, action) => {
       return { ...state, isLoading: false, error: action.payload };
     case SINGLE_USER_RESET:
       return { singleUser: [], isLoading: false, error: null };
-    // Single User End
 
+    // Single User End
     case USER_LOGOUT:
       window.localStorage.removeItem("authToken");
       return {
@@ -102,6 +107,27 @@ export const addUserReducer = (state = initialState, action) => {
       return { ...state, isLoading: false, error: action.payload };
     case USER_REGISTER_RESET:
       return { addUsers: [], isLoading: false, error: null };
+    default:
+      return state;
+  }
+};
+
+// Update User Reducer
+export const updateUserReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case UPDATE_USER_REQUEST:
+      return { ...state, isLoading: true, success: false };
+    case UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        success: true,
+        updateSingleUser: action.payload,
+      };
+    case UPDATE_USER_ERROR:
+      return { ...state, isLoading: false, error: action.payload };
+    case UPDATE_USER_RESET:
+      return { updateSingleUser: [], isLoading: false, error: null };
     default:
       return state;
   }

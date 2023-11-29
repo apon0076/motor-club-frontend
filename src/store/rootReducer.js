@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import customerReducer from "./Customer/customerReducer";
 import invoiceReducer from "./Invoice/invoiceReducer";
 import registrationReducer from "./Registration/registrationReducer";
-import userReducer, { addUserReducer } from "./User/userReducer";
+import userReducer, { addUserReducer, updateUserReducer } from "./User/userReducer";
 import vehicleModelReducer from "./VehicleModel/vehicleModelReduces";
 import salesReducer from "./sales/salesReducer";
 import vehicleRegReducer from "./vehicleRegNo/vehicleRegReducer";
@@ -16,6 +16,7 @@ const rootReducer = combineReducers({
   vehicleReg: vehicleRegReducer,
   sales: salesReducer,
   addUser: addUserReducer,
+  updateUser: updateUserReducer,
 });
 
 export default rootReducer;
