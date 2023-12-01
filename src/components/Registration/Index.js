@@ -43,10 +43,6 @@ export default function Index() {
 
   useEffect(() => {
     if (data?.customer) {
-      // setValue([
-      //   { name: data?.customer?.name },
-      //   { address: data?.customer?.phone },
-      // ]);
       setValue("name", data?.customer?.name);
       setValue("address", data?.customer?.address);
       setValue("vehicle_option", data?.vachele[0]?.registration_no);
@@ -200,60 +196,12 @@ export default function Index() {
       </div>
       <br />
       <br />
-      <p>Complain</p>
-      <Editor
-        apiKey="541du0ed3xh41c92080xvmfz6ori4aibqvs4g9vvs8onvjmn"
-        // onInit={(evt, editor) => (editorRef.current = editor)}
-        initialValue=" "
-        init={{
-          height: 250,
-          menubar: false,
-          plugins: [
-            "advlist autolink lists link image charmap print preview anchor",
-            "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table paste code help wordcount",
-          ],
-          toolbar:
-            "undo redo | formatselect | " +
-            "bold italic backcolor | alignleft aligncenter " +
-            "alignright alignjustify | bullist numlist outdent indent | " +
-            "removeformat | help",
-          content_style:
-            "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-        }}
-        onEditorChange={(text) => setComplain(text)}
-      />
-      <br />
-      <br />
-      <p>Work to Do</p>
-      <Editor
-        apiKey="541du0ed3xh41c92080xvmfz6ori4aibqvs4g9vvs8onvjmn"
-        // onInit={(evt, editor) => (editorRef.current = editor)}
-        initialValue=" "
-        onEditorChange={(text) => setWork(text)}
-        init={{
-          height: 250,
-          menubar: false,
-          plugins: [
-            "advlist autolink lists link image charmap print preview anchor",
-            "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table paste code help wordcount",
-          ],
-          toolbar:
-            "undo redo | formatselect | " +
-            "bold italic backcolor | alignleft aligncenter " +
-            "alignright alignjustify | bullist numlist outdent indent | " +
-            "removeformat | help",
-          content_style:
-            "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-        }}
-      />
+
       <div className="flex items-center justify-center">
         <input
           className="bg-red-800 text-white py-2 px-10 transition-all ease-in-out hover:bg-red-900 mt-10 cursor-pointer"
           type="submit"
           value="Save"
-          // onClick={handleRoute}
         />
       </div>
       <ToastContainer />

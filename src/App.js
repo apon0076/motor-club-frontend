@@ -14,6 +14,7 @@ import InventoryList from "./components/Inventory/Index";
 import CreateInvoice from "./components/Invoice/CreateInvoice";
 import InvoiceIndex from "./components/Invoice/Index";
 import Invoice from "./components/Invoice/Invoice";
+import JobCard from "./components/JobCard/JobCard";
 import Navbar from "./components/Layouts/Navbar";
 import Sidebar from "./components/Layouts/Sidebar";
 import SidebarToggle from "./components/Layouts/SidebarToggle";
@@ -28,6 +29,7 @@ import SearchByCustomerIndex from "./components/SearchByCustomer/Index";
 import SearchByRegIndex from "./components/SearchByReg/Index";
 import SearchByVehicleModelIndex from "./components/SearchByVehicleModel/Index";
 import VehicleProfile from "./components/SearchByVehicleModel/VehicleProfile";
+import AddJobCard from "./components/JobCard/AddJobCard";
 
 function App({ user }) {
   const location = useLocation();
@@ -198,6 +200,20 @@ function App({ user }) {
               path="/user-list"
               render={() =>
                 user?.token ? <UserList /> : <Redirect to="/user-login" />
+              }
+            />
+            <Route
+              exact
+              path="/job-card"
+              render={() =>
+                user?.token ? <JobCard /> : <Redirect to="/user-login" />
+              }
+            />
+            <Route
+              exact
+              path="/add-job-card"
+              render={() =>
+                user?.token ? <AddJobCard /> : <Redirect to="/user-login" />
               }
             />
           </Switch>

@@ -10,6 +10,7 @@ import {
 import { IoLogoUsd } from "react-icons/io";
 import { MdInventory } from "react-icons/md";
 import { RiDashboardFill } from "react-icons/ri";
+import { BiSolidCreditCardFront } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { userLogOut } from "../../store/User/userActions";
@@ -49,6 +50,15 @@ export default function Sidebar() {
       >
         <FaPlusSquare className="sideBar--icons" />
         Registration
+      </NavLink>
+
+      <NavLink
+        className="sideBar"
+        activeClassName="sideBar--active"
+        to="/job-card"
+      >
+        <BiSolidCreditCardFront className="sideBar--icons" />
+        Job Card
       </NavLink>
 
       <NavLink

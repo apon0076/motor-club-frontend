@@ -74,6 +74,7 @@ export default function Index() {
               <tr>
                 <th>Customer Name</th>
                 <th>Phone Number</th>
+                <th>Email</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -82,6 +83,7 @@ export default function Index() {
                 <tr key={index}>
                   <td>{customer.name}</td>
                   <td>{customer.phone}</td>
+                  <td>{customer.email}</td>
                   <td>
                     <Link to={`/customer-profile/${customer.id}`}>
                       <button className="text-white p-2 bg-red-800 transition-all ease-in-out hover:bg-red-900">

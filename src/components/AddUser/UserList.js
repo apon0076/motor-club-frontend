@@ -5,14 +5,18 @@ import { useEffect } from "react";
 import Pagination from "../Pagination/Pagination";
 import Loader from "../Loader/Loader";
 import { useLocation, useHistory } from "react-router-dom";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash, FaTrashAlt } from "react-icons/fa";
 import { useState } from "react";
 import Modal from "react-responsive-modal";
 import EditUser from "./EditUser";
+import axios from "axios";
+import WarningModal from "../WarningModal/WarningModal";
 
 const UserList = () => {
   const [userModalOpen, setUserModalOpen] = useState(false);
   const [userDeleteModalOpen, setUserDeleteModalOpen] = useState(false);
+  const [userDeleteId, setUserDeleteId] = useState(null);
+  const [isDelLoading, setIsDelLoading] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
@@ -52,8 +56,27 @@ const UserList = () => {
   const onCloseUserModal = () => setUserModalOpen(false);
 
   //Delete User Modal Open & Close Functions
-  const onOpenUserDeleteModal = () => setUserDeleteModalOpen(true);
+  const onOpenUserDeleteModal = (id) => {
+    setUserDeleteModalOpen(true);
+    setUserDeleteId(id);
+  };
   const onCloseUserDeleteModal = () => setUserDeleteModalOpen(false);
+
+  // Handle User Delete
+  const handleUserDelete = async (id) => {
+    try {
+      setIsDelLoading(true);
+      const response = await axios.delete(
+        `${process.env.REACT_APP_BACKEND_URL}/users/${id}`
+      );
+      setUserDeleteModalOpen(false);
+      dispatch(usersList(page !== null ? page : ""));
+    } catch (error) {
+      console.error(`Error deleting resource with id ${id}:`, error);
+    } finally {
+      setIsDelLoading(false);
+    }
+  };
 
   return (
     <>
@@ -79,9 +102,7 @@ const UserList = () => {
                     <td>{data.name}</td>
                     <td>{data.email}</td>
                     <td>
-                      {data.role === "admin"
-                        ? "Super Admin"
-                        : "General User"}
+                      {data.role === "admin" ? "Super Admin" : "General User"}
                     </td>
                     <td>
                       <button
@@ -94,7 +115,7 @@ const UserList = () => {
                       </button>
                       <button
                         className="text-white p-2  bg-red-700 transition-all ease-in-out hover:bg-red-900"
-                        onClick={() => onOpenUserDeleteModal()}
+                        onClick={() => onOpenUserDeleteModal(data.id)}
                       >
                         <FaTrash size="1.1rem" />
                       </button>
@@ -124,7 +145,12 @@ const UserList = () => {
       </Modal>
 
       <Modal open={userDeleteModalOpen} onClose={onCloseUserDeleteModal} center>
-        <p>delete</p>
+        <WarningModal
+          id={userDeleteId}
+          loading={isDelLoading}
+          handleClick={handleUserDelete}
+          modalControlState={setUserDeleteModalOpen}
+        />
       </Modal>
     </>
   );
