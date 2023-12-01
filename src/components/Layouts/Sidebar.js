@@ -14,13 +14,30 @@ import { BiSolidCreditCardFront } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { userLogOut } from "../../store/User/userActions";
+import axios from "axios";
 
 export default function Sidebar() {
   const dispatch = useDispatch();
+
+  // Check Active
   const checkActive = (match, location) => {
     if (!location) return false;
     const { pathname } = location;
     return pathname === "/";
+  };
+
+  // Handle Logout
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/logout`
+      );
+      dispatch(userLogOut());
+    } catch (error) {
+      console.error(`Error:`, error);
+    } finally {
+      console.error(`Done`);
+    }
   };
   return (
     <div className="sidebar__section">
@@ -124,7 +141,7 @@ export default function Sidebar() {
         Inventory
       </NavLink>
 
-      <button className="sideBar w-full" onClick={() => dispatch(userLogOut())}>
+      <button className="sideBar w-full" onClick={() => handleLogout()}>
         <FaSignOutAlt className="sideBar--icons" />
         Logout
       </button>
