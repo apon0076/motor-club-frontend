@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  FaCalendarAlt,
   FaCarSide,
   FaFileInvoiceDollar,
   FaPlusSquare,
@@ -18,6 +19,9 @@ import axios from "axios";
 
 export default function Sidebar() {
   const dispatch = useDispatch();
+  const loggedInUser = JSON.parse(
+    window.localStorage.getItem("loggedInProfile")
+  );
 
   // Check Active
   const checkActive = (match, location) => {
@@ -51,14 +55,16 @@ export default function Sidebar() {
         Dashboard
       </NavLink>
 
-      <NavLink
-        className="sideBar"
-        activeClassName="sideBar--active"
-        to="/add-user"
-      >
-        <FaUsers className="sideBar--icons" />
-        Add User
-      </NavLink>
+      {loggedInUser?.role === "admin" ? (
+        <NavLink
+          className="sideBar"
+          activeClassName="sideBar--active"
+          to="/add-user"
+        >
+          <FaUsers className="sideBar--icons" />
+          Add User
+        </NavLink>
+      ) : null}
 
       <NavLink
         className="sideBar"
@@ -112,6 +118,15 @@ export default function Sidebar() {
       >
         <FaWindowMaximize className="sideBar--icons" />
         Search by Vehicle Reg
+      </NavLink>
+
+      <NavLink
+        className="sideBar"
+        activeClassName="sideBar--active"
+        to="/appointments"
+      >
+        <FaCalendarAlt className="sideBar--icons" />
+        Appointments
       </NavLink>
 
       <NavLink

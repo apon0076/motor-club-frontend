@@ -106,6 +106,24 @@ export default function AddAnother({ setOtherData, otherData, addNewBrand }) {
               </p>
             )}
           </div>
+
+          <div>
+            <label>VIN No</label>
+            <br />
+            <input
+              className="border border-black outline-none px-2 py-1 w-8/12"
+              type="text"
+              {...register("vin", { required: true })}
+              onChange={(e) =>
+                setOtherData({ ...otherData, vin_number: e.target.value })
+              }
+            />
+            {errors.reg_no === "" && (
+              <p className="text-xs text-red-500">
+                VIN No. is required
+              </p>
+            )}
+          </div>
         </div>
         <div className="flex items-center justify-center">
           <button

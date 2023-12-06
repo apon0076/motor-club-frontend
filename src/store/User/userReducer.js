@@ -24,6 +24,7 @@ import {
 
 const initialState = {
   token: window.localStorage.getItem("authToken") || "",
+  loginData: [],
   message: "",
   currentUser: {},
   addUsers: [],
@@ -43,12 +44,13 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         token: action.payload.data.token,
+        loginData: action.payload,
         isLoading: false,
       };
     case USER_LOGIN_ERROR:
       return { ...state, isLoading: false, error: action.payload };
     case USER_LOGIN_RESET:
-      return { token: [], isLoading: false, error: null };
+      return { token: [], loginData: [], isLoading: false, error: null };
 
     case USER_LIST_REQUEST:
       return { ...state, isLoading: true };
@@ -80,6 +82,7 @@ const userReducer = (state = initialState, action) => {
     // Single User End
     case USER_LOGOUT:
       window.localStorage.removeItem("authToken");
+      window.localStorage.removeItem("loggedInProfile");
       return {
         token: "",
         isLoading: false,

@@ -302,7 +302,9 @@ input[type="number"] {
 .responsive-modal-md {
   width: 800px;
 }
-
+.css-b62m3t-container {
+  width: 100%;
+}
 
 @media print {
   * {

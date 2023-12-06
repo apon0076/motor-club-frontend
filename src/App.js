@@ -30,6 +30,7 @@ import SearchByRegIndex from "./components/SearchByReg/Index";
 import SearchByVehicleModelIndex from "./components/SearchByVehicleModel/Index";
 import VehicleProfile from "./components/SearchByVehicleModel/VehicleProfile";
 import AddJobCard from "./components/JobCard/AddJobCard";
+import Appointments from "./components/Appointments/Index";
 
 function App({ user }) {
   const location = useLocation();
@@ -214,6 +215,13 @@ function App({ user }) {
               path="/add-job-card"
               render={() =>
                 user?.token ? <AddJobCard /> : <Redirect to="/user-login" />
+              }
+            />
+            <Route
+              exact
+              path="/appointments"
+              render={() =>
+                user?.token ? <Appointments /> : <Redirect to="/user-login" />
               }
             />
           </Switch>

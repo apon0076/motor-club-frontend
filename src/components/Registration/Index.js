@@ -25,6 +25,7 @@ export default function Index() {
     model: "",
     model_year: "",
     registration_no: "",
+    vin_number: "",
   });
 
   const data = useSelector((state) => state.registration.oldReg);

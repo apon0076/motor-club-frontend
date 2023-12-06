@@ -8,7 +8,9 @@ import Logo from "./../../assets/logo.jpg";
 
 export default function Index() {
   // Fetch Data From Reducer
-  const { token, isLoading, error } = useSelector((state) => state.user);
+  const { token, loginData, isLoading, error } = useSelector(
+    (state) => state.user
+  );
   const { register, handleSubmit } = useForm();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -22,6 +24,10 @@ export default function Index() {
   useEffect(() => {
     if (token) {
       window.localStorage.setItem("authToken", token);
+      window.localStorage.setItem(
+        "loggedInProfile",
+        JSON.stringify(loginData.data.user)
+      );
       history.push("/");
     } else if (error !== null && error !== undefined) {
       toast.error("Email and password do not match");
