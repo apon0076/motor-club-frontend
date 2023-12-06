@@ -5,6 +5,7 @@ import AppointmentsList from "./AppointmentsList";
 import { Modal } from "react-responsive-modal";
 import AddAppointments from "./AddAppointments";
 import axios from "axios";
+import { useLocation, useHistory } from "react-router-dom";
 
 const Index = () => {
   const [vehicleId, setVehicleId] = useState("");
@@ -12,15 +13,30 @@ const Index = () => {
   const [appointmentModal, setAppointmentModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [appointmentData, setAppointmentData] = useState([]);
+  const history = useHistory();
+  const location = useLocation();
 
   console.log("appointmentData", appointmentData);
+  // Push Query Params
+  useEffect(() => {
+    history.push(`/appointments?date=&car_id=&page=1`);
+  }, []);
+
+  // Get Query Params
+  const getQueryParams = new URLSearchParams(location.search);
+
+  // Accessing specific query parameters
+  const date = getQueryParams.get("date");
+  const car_id = getQueryParams.get("car_id");
+  const page = getQueryParams.get("page");
+
   // API Call for Appointment List
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/appointments?date=${filteredDate}&car_id=${vehicleId}`
+          `${process.env.REACT_APP_BACKEND_URL}/appointments?date=${date}&car_id=${car_id}&page=${page}`
         );
         setAppointmentData(response);
       } catch (error) {
@@ -28,11 +44,11 @@ const Index = () => {
           alert("Server Error");
         }
       } finally {
-        setIsLoading(false); // Set loading to false regardless of success or error
+        setIsLoading(false);
       }
     };
     fetchData();
-  }, [filteredDate, vehicleId]);
+  }, [date, car_id, page]);
 
   // Handle Open Add Appointments Modal
   const onOpenAppointmentsModal = () => {
@@ -42,6 +58,14 @@ const Index = () => {
   // Handle Close Add Appointments Modal
   const onCloseAppointmentsModal = () => {
     setAppointmentModal(false);
+  };
+
+  //Handle Pagination
+  const handlePagination = (e) => {
+    const pageNumber = Number(e.target.getAttribute("page_number"));
+    history.push(
+      `/appointments?date=${filteredDate}&car_id=${vehicleId}&page=${pageNumber}`
+    );
   };
   return (
     <>
@@ -73,16 +97,23 @@ const Index = () => {
 
           <button
             className="bg-red-800 text-white py-1 border border-red-800 ml-5 px-4 transition-all ease-in-out rounded-lg hover:bg-red-900 flex items-center"
-            //   onClick={() =>
-            //     history.push(`/search-by-customer?search=${searchCustomer}&page=1`)
-            //   }
+            onClick={() =>
+              // history.push(`/search-by-customer?search=${searchCustomer}&page=1`)
+              history.push(
+                `/appointments?date=${filteredDate}&car_id=${vehicleId}&page=1`
+              )
+            }
           >
             <FaSearch className="mr-2" />
             Search
           </button>
         </div>
       </div>
-      <AppointmentsList />
+      <AppointmentsList
+        isLoading={isLoading}
+        appointmentData={appointmentData}
+        handlePagination={handlePagination}
+      />
       <Modal open={appointmentModal} onClose={onCloseAppointmentsModal} center>
         <AddAppointments />
       </Modal>
