@@ -3,17 +3,18 @@ import { useState } from "react";
 import { fetchOldRegistration } from "../../store/Registration/registrationAction";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { useEffect } from "react";
 
-const AddAppointments = () => {
+const AddAppointments = ({ setAppointmentModal, setAppointmentAddSuccess }) => {
   const [vehicleId, setVehicleId] = useState("");
   const [date, setDate] = useState("");
   const [note, setNote] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-  console.log("vehicleId", vehicleId);
+
   // Get Data From Reducer
   const oldReg = useSelector((state) => state.registration.oldReg);
-  console.log("oldReg", oldReg);
+
   // Handle Submit
   const handleSubmit = async () => {
     const dataToPost = {
@@ -22,18 +23,26 @@ const AddAppointments = () => {
       note: note,
     };
     console.log("dataToPost", dataToPost);
-    try {
-      setIsLoading(true);
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/appointments`,
-        dataToPost
-      );
-      // setUserDeleteModalOpen(false);
-      // dispatch(usersList(page !== null ? page : ""));
-    } catch (error) {
-      console.error(`Error:`, error);
-    } finally {
-      setIsLoading(false);
+    if (
+      dataToPost.car_id !== "" &&
+      dataToPost.date !== "" &&
+      dataToPost.note !== ""
+    ) {
+      try {
+        setIsLoading(true);
+        const response = await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/appointments`,
+          dataToPost
+        );
+        setAppointmentModal(false);
+        setAppointmentAddSuccess(true);
+      } catch (error) {
+        console.error(`Error:`, error);
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      alert("All Field Are Required");
     }
   };
   return (
@@ -49,6 +58,7 @@ const AddAppointments = () => {
         className="w-96 border border-black rounded p-1"
         onClick={(e) => setVehicleId(e.target.value)}
       >
+        <option>---Select a Vehicle---</option>
         {oldReg?.vachele?.map((data) => (
           <option value={data?.registration_no}>
             {data?.brand} {data.model} {data.registration_no}

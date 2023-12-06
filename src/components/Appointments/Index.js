@@ -11,12 +11,12 @@ const Index = () => {
   const [vehicleId, setVehicleId] = useState("");
   const [filteredDate, setFilteredDate] = useState("");
   const [appointmentModal, setAppointmentModal] = useState(false);
+  const [appointmentAddSuccess, setAppointmentAddSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [appointmentData, setAppointmentData] = useState([]);
   const history = useHistory();
   const location = useLocation();
 
-  console.log("appointmentData", appointmentData);
   // Push Query Params
   useEffect(() => {
     history.push(`/appointments?date=&car_id=&page=1`);
@@ -36,7 +36,11 @@ const Index = () => {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/appointments?date=${date}&car_id=${car_id}&page=${page}`
+          `${process.env.REACT_APP_BACKEND_URL}/appointments?date=${
+            date !== null ? date : ""
+          }&car_id=${car_id !== null ? car_id : ""}&page=${
+            page !== null ? page : 1
+          }`
         );
         setAppointmentData(response);
       } catch (error) {
@@ -48,11 +52,12 @@ const Index = () => {
       }
     };
     fetchData();
-  }, [date, car_id, page]);
+  }, [date, car_id, page, appointmentAddSuccess]);
 
   // Handle Open Add Appointments Modal
   const onOpenAppointmentsModal = () => {
     setAppointmentModal(true);
+    setAppointmentAddSuccess(false);
   };
 
   // Handle Close Add Appointments Modal
@@ -69,17 +74,17 @@ const Index = () => {
   };
   return (
     <>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row items-center justify-between">
         <button
-          className="bg-red-800 text-white py-1 border border-red-800 ml-5 px-4 transition-all ease-in-out rounded-lg hover:bg-red-900 flex items-center"
+          className="bg-red-800 text-white py-1 border border-red-800 ml-0 md:ml-5 px-4 transition-all ease-in-out rounded-lg hover:bg-red-900 flex items-center mb-3 md:mb-0"
           onClick={() => onOpenAppointmentsModal()}
         >
           <IoAddCircleSharp size="1.3rem" className="mr-1" />
           Add Appointments
         </button>
 
-        <div className="flex items-center">
-          <div className="relative">
+        <div className="flex flex-col md:flex-row items-center">
+          <div className="relative mb-3 md:mb-0 md:mr-3">
             <input
               className="border border-gray-500 px-8 py-1 rounded-lg"
               type="text"
@@ -90,15 +95,14 @@ const Index = () => {
           </div>
 
           <input
-            className="border border-gray-500 px-8 py-1 rounded-lg ml-5"
+            className="border border-gray-500 px-8 py-1 rounded-lg mb-3 md:mb-0 md:mr-3"
             type="date"
             onChange={(e) => setFilteredDate(e.target.value)}
           />
 
           <button
-            className="bg-red-800 text-white py-1 border border-red-800 ml-5 px-4 transition-all ease-in-out rounded-lg hover:bg-red-900 flex items-center"
+            className="bg-red-800 text-white py-1 border border-red-800 px-4 transition-all ease-in-out rounded-lg hover:bg-red-900 flex items-center"
             onClick={() =>
-              // history.push(`/search-by-customer?search=${searchCustomer}&page=1`)
               history.push(
                 `/appointments?date=${filteredDate}&car_id=${vehicleId}&page=1`
               )
@@ -109,13 +113,17 @@ const Index = () => {
           </button>
         </div>
       </div>
+
       <AppointmentsList
         isLoading={isLoading}
         appointmentData={appointmentData}
         handlePagination={handlePagination}
       />
       <Modal open={appointmentModal} onClose={onCloseAppointmentsModal} center>
-        <AddAppointments />
+        <AddAppointments
+          setAppointmentModal={setAppointmentModal}
+          setAppointmentAddSuccess={setAppointmentAddSuccess}
+        />
       </Modal>
     </>
   );
