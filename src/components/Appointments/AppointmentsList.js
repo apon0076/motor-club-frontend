@@ -7,7 +7,12 @@ import WarningModal from "../WarningModal/WarningModal";
 import { useState } from "react";
 import axios from "axios";
 
-const AppointmentsList = ({ isLoading, appointmentData, handlePagination, setAppointmentAddSuccess }) => {
+const AppointmentsList = ({
+  isLoading,
+  appointmentData,
+  handlePagination,
+  setAppointmentAddSuccess,
+}) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [isDelLoading, setIsDelLoading] = useState(false);
@@ -21,22 +26,22 @@ const AppointmentsList = ({ isLoading, appointmentData, handlePagination, setApp
 
   // Handle Close Delete Modal
   const onCloseDeleteModal = () => setDeleteModalOpen(false);
-   // Handle User Delete
-   const handleDelete = async (id) => {
+  // Handle User Delete
+  const handleDelete = async (id) => {
     try {
       setIsDelLoading(true);
       const response = await axios.delete(
         `${process.env.REACT_APP_BACKEND_URL}/appointments/${id}`
       );
       setDeleteModalOpen(false);
-      setAppointmentAddSuccess(true)
+      setAppointmentAddSuccess(true);
     } catch (error) {
       console.error(`Error deleting resource with id ${id}:`, error);
     } finally {
       setIsDelLoading(false);
     }
-   }
- 
+  };
+
   return (
     <>
       <div className="mt-5 border border-gray-400 rounded-md p-5">
@@ -60,11 +65,9 @@ const AppointmentsList = ({ isLoading, appointmentData, handlePagination, setApp
                     <td>{data.date}</td>
                     <td className="h-1">{data.note}</td>
                     <td>
-                      <button className="text-white p-2 bg-yellow-700 transition-all ease-in-out hover:bg-yellow-800 mr-1 rounded">
-                        <FaRegEdit />
-                      </button>
-                      <button className="text-white p-2 bg-red-800 transition-all ease-in-out hover:bg-red-900 rounded"
-                      onClick={()=>onOpenDeleteModal(data.id)}
+                      <button
+                        className="text-white p-2 bg-red-800 transition-all ease-in-out hover:bg-red-900 rounded"
+                        onClick={() => onOpenDeleteModal(data.id)}
                       >
                         <FaRegTrashAlt />
                       </button>
