@@ -22,7 +22,6 @@ const AddAppointments = ({ setAppointmentModal, setAppointmentAddSuccess }) => {
       date: date,
       note: note,
     };
-    console.log("dataToPost", dataToPost);
     if (
       dataToPost.car_id !== "" &&
       dataToPost.date !== "" &&
@@ -79,12 +78,21 @@ const AddAppointments = ({ setAppointmentModal, setAppointmentAddSuccess }) => {
         onChange={(e) => setNote(e.target.value)}
       />
       <br />
-      <button
-        className="text-white p-2 bg-red-800 transition-all ease-in-out hover:bg-red-900 rounded"
-        onClick={() => handleSubmit()}
-      >
-        Add
-      </button>
+      {isLoading ? (
+        <button
+          className="text-white p-2 bg-red-400 transition-all   rounded"
+          disabled
+        >
+          Please Wait...
+        </button>
+      ) : (
+        <button
+          className="text-white p-2 bg-red-800 transition-all ease-in-out hover:bg-red-900 rounded"
+          onClick={() => handleSubmit()}
+        >
+          Add
+        </button>
+      )}
     </div>
   );
 };

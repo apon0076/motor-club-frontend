@@ -6,6 +6,7 @@ import { Modal } from "react-responsive-modal";
 import AddAppointments from "./AddAppointments";
 import axios from "axios";
 import { useLocation, useHistory } from "react-router-dom";
+import FilterRemoveBtn from "../FilterRemoveBtn/FilterRemoveBtn";
 
 const Index = () => {
   const [vehicleId, setVehicleId] = useState("");
@@ -72,6 +73,18 @@ const Index = () => {
       `/appointments?date=${filteredDate}&car_id=${vehicleId}&page=${pageNumber}`
     );
   };
+
+  // Handle Date Filter Remove
+  const handleRegFilterRemove = () => {
+    setVehicleId("");
+    history.push(`/appointments?date=${filteredDate}&car_id=&page=1`);
+  };
+
+  // Handle Date Filter Remove
+  const handleDateFilterRemove = () => {
+    setFilteredDate("");
+    history.push(`/appointments?date=&car_id=${vehicleId}&page=1`);
+  };
   return (
     <>
       <div className="flex flex-col md:flex-row items-center justify-between">
@@ -90,15 +103,23 @@ const Index = () => {
               type="text"
               placeholder="Vehicle Reg"
               onChange={(e) => setVehicleId(e.target.value)}
+              value={vehicleId}
             />
             <FaSearch className="absolute top-2 left-2" />
+            {vehicleId && <FilterRemoveBtn onClick={handleRegFilterRemove} />}
           </div>
 
-          <input
-            className="border border-gray-500 px-8 py-1 rounded-lg mb-3 md:mb-0 md:mr-3"
-            type="date"
-            onChange={(e) => setFilteredDate(e.target.value)}
-          />
+          <div className="relative">
+            <input
+              className="border border-gray-500 px-8 py-1 rounded-lg mb-3 md:mb-0 md:mr-3"
+              type="date"
+              onChange={(e) => setFilteredDate(e.target.value)}
+              value={filteredDate}
+            />
+            {filteredDate && (
+              <FilterRemoveBtn onClick={handleDateFilterRemove} />
+            )}
+          </div>
 
           <button
             className="bg-red-800 text-white py-1 border border-red-800 px-4 transition-all ease-in-out rounded-lg hover:bg-red-900 flex items-center"
@@ -118,6 +139,7 @@ const Index = () => {
         isLoading={isLoading}
         appointmentData={appointmentData}
         handlePagination={handlePagination}
+        setAppointmentAddSuccess={setAppointmentAddSuccess}
       />
       <Modal open={appointmentModal} onClose={onCloseAppointmentsModal} center>
         <AddAppointments
